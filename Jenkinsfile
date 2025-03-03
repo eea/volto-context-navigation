@@ -1,13 +1,10 @@
 pipeline {
-  tools {
-    jdk 'Java17'
-  }
   agent {
     node { label 'docker-host' }
   }
 
   environment {
-    GIT_NAME = "volto-addon-template"
+    GIT_NAME = "volto-context-navigation"
     NAMESPACE = "@eeacms"
     SONARQUBE_TAGS = "volto.eea.europa.eu"
     DEPENDENCIES = ""
@@ -413,4 +410,3 @@ pipeline {
     }
   }
 }
-

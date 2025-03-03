@@ -1,12 +1,12 @@
-# volto-addon-template
+# volto-context-navigation
 
 ## Develop
 
 1. Make sure you have `docker` and `docker compose` installed and running on your machine:
 
     ```Bash
-    git clone https://github.com/eea/volto-addon-template.git
-    cd volto-addon-template
+    git clone https://github.com/eea/volto-context-navigation.git
+    cd volto-context-navigation
     git checkout -b bugfix-123456 develop
     make
     make start
@@ -24,7 +24,7 @@
 
 1. Happy hacking!
 
-### Or add @eeacms/volto-addon-template to your Volto project
+### Or add @eeacms/volto-context-navigation to your Volto project
 
 Before starting make sure your development environment is properly set. See [Volto Developer Documentation](https://docs.voltocms.com/getting-started/install/)
 
@@ -34,15 +34,15 @@ Before starting make sure your development environment is properly set. See [Vol
 
 1.  Create new volto app
 
-        yo @plone/volto my-volto-project --addon @eeacms/volto-addon-template --skip-install
+        yo @plone/volto my-volto-project --addon @eeacms/volto-context-navigation --skip-install
         cd my-volto-project
 
 1.  Add the following to `mrs.developer.json`:
 
         {
-            "volto-addon-template": {
-                "url": "https://github.com/eea/volto-addon-template.git",
-                "package": "@eeacms/volto-addon-template",
+            "volto-context-navigation": {
+                "url": "https://github.com/eea/volto-context-navigation.git",
+                "package": "@eeacms/volto-context-navigation",
                 "branch": "develop",
                 "path": "src"
             }
@@ -69,19 +69,19 @@ Before starting make sure your development environment is properly set. See [Vol
 
 1.  Happy hacking!
 
-        cd src/addons/volto-addon-template/
+        cd src/addons/volto-context-navigation/
 
 ## Cypress
 
 To run cypress locally, first make sure you don't have any Volto/Plone running on ports `8080` and `3000`.
 
 You don't have to be in a `clean-volto-project`, you can be in any Volto Frontend
-project where you added `volto-addon-template` to `mrs.developer.json`
+project where you added `volto-context-navigation` to `mrs.developer.json`
 
 Go to:
 
   ```BASH
-  cd src/addons/volto-addon-template/
+  cd src/addons/volto-context-navigation/
   ```
 
 Start:
@@ -91,7 +91,7 @@ Start:
   make start
   ```
 
-This will build and start with Docker a clean `Plone backend` and `Volto Frontend` with `volto-addon-template` block installed.
+This will build and start with Docker a clean `Plone backend` and `Volto Frontend` with `volto-context-navigation` block installed.
 
 Open Cypress Interface:
 
