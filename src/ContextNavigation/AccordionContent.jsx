@@ -22,36 +22,34 @@ const AccordionContent = (props) => {
   //   (state) => state.content?.subrequests?.[location]?.data?.items || [],
   // );
   const items = useChildren(location);
-  return (
+  const filteredItems = items.filter((item) =>
+    types.length ? types.includes(item['@type']) : item,
+  );
+  
+  return filteredItems.length ? (
     <div className="dataset-content">
       <div>
-        {items.length
-          ? items
-              .filter((item) =>
-                types.length ? types.includes(item['@type']) : item,
-              )
-              .map((item) => (
-                <List.Item
-                  key={item.id}
-                  className={`${
-                    item['@id']?.endsWith(curent_location.pathname)
-                      ? 'active'
-                      : ''
-                  }`}
-                >
-                  <List.Content>
-                    <div className="dataset-item">
-                      <Link to={flattenToAppURL(getBaseUrl(item['@id']))}>
-                        {item.title}
-                      </Link>
-                    </div>
-                  </List.Content>
-                </List.Item>
-              ))
-          : null}
+        {filteredItems.map((item) => (
+          <List.Item
+            key={item.id}
+            className={`${
+              item['@id']?.endsWith(curent_location.pathname)
+                ? 'active'
+                : ''
+            }`}
+          >
+            <List.Content>
+              <div className="dataset-item">
+                <Link to={flattenToAppURL(getBaseUrl(item['@id']))}>
+                  {item.title}
+                </Link>
+              </div>
+            </List.Content>
+          </List.Item>
+        ))}
       </div>
     </div>
-  );
+  ) : null;
 };
 
 export default compose()(AccordionContent);
