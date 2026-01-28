@@ -25,7 +25,7 @@ const AccordionContent = (props) => {
   const filteredItems = items.filter((item) =>
     types.length ? types.includes(item['@type']) : item,
   );
-  
+
   return filteredItems.length ? (
     <div className="dataset-content">
       <div>
@@ -33,9 +33,7 @@ const AccordionContent = (props) => {
           <List.Item
             key={item.id}
             className={`${
-              item['@id']?.endsWith(curent_location.pathname)
-                ? 'active'
-                : ''
+              item['@id']?.endsWith(curent_location.pathname) ? 'active' : ''
             }`}
           >
             <List.Content>
