@@ -33,7 +33,7 @@ const useChildrenForItems = (items) => {
 };
 
 const Accordion = (props) => {
-  const { items = {}, curent_location, activeMenu, data = {} } = props;
+  const { items = [], curent_location, activeMenu, data = {} } = props;
   const [currentIndex, setIndex] = React.useState(activeMenu ?? 0);
   const history = useHistory();
   const childrenMap = useChildrenForItems(items);
