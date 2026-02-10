@@ -23,8 +23,8 @@ const useChildrenForItems = (items) => {
 
   const childrenMap = React.useMemo(() => {
     const map = {};
-    itemUrls.forEach((url, index) => {
-      map[index] = allSubrequests[url]?.data?.items || [];
+    itemUrls.forEach((url) => {
+      map[url] = allSubrequests[url]?.data?.items || [];
     });
     return map;
   }, [itemUrls, allSubrequests]);
@@ -55,7 +55,7 @@ const Accordion = (props) => {
       <div className="context-navigation-header">{data?.title}</div>
       {items.map((item, index) => {
         const { id } = item;
-        const childItems = childrenMap[index];
+        const childItems = childrenMap[item.url];
         const { types = [] } = data;
         const filteredChildren = childItems.filter((child) =>
           types.length ? types.includes(child['@type']) : child,
