@@ -3,12 +3,40 @@ import { Accordion as SemanticAccordion, Icon } from 'semantic-ui-react';
 
 import AccordionContent from './AccordionContent';
 import { useHistory } from 'react-router-dom';
-import { useChildren } from './View';
+import { useDispatch, useSelector } from 'react-redux';
+import { getContent } from '@plone/volto/actions';
+
+const useChildrenForItems = (items) => {
+  const dispatch = useDispatch();
+  const itemUrls = React.useMemo(() => items.map((item) => item.url), [items]);
+
+  React.useEffect(() => {
+    itemUrls.forEach((url) => {
+      const action = getContent(url, null, url);
+      dispatch(action);
+    });
+  }, [itemUrls, dispatch]);
+
+  const allSubrequests = useSelector(
+    (state) => state.content.subrequests || {},
+  );
+
+  const childrenMap = React.useMemo(() => {
+    const map = {};
+    itemUrls.forEach((url, index) => {
+      map[index] = allSubrequests[url]?.data?.items || [];
+    });
+    return map;
+  }, [itemUrls, allSubrequests]);
+
+  return childrenMap;
+};
 
 const Accordion = (props) => {
   const { items = {}, curent_location, activeMenu, data = {} } = props;
   const [currentIndex, setIndex] = React.useState(activeMenu ?? 0);
   const history = useHistory();
+  const childrenMap = useChildrenForItems(items);
 
   const handleClick = (e, item) => {
     let itemUrl = '/' + item['@id'].split('/').slice(3).join('/');
@@ -27,7 +55,7 @@ const Accordion = (props) => {
       <div className="context-navigation-header">{data?.title}</div>
       {items.map((item, index) => {
         const { id } = item;
-        const childItems = useChildren(item.url);
+        const childItems = childrenMap[index];
         const { types = [] } = data;
         const filteredChildren = childItems.filter((child) =>
           types.length ? types.includes(child['@type']) : child,
