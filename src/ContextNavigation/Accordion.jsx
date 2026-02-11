@@ -44,10 +44,20 @@ const useChildrenForItems = (items) => {
 };
 
 const Accordion = (props) => {
-  const { items = {}, curent_location, activeMenu, data = {} } = props;
+  const { items = [], curent_location, activeMenu, data = {} } = props;
   const [currentIndex, setIndex] = React.useState(activeMenu ?? 0);
   const history = useHistory();
   const childrenMap = useChildrenForItems(items);
+
+  const getItemUrl = (item) => {
+    if (item.url) {
+      return item.url;
+    }
+    if (item['@id']) {
+      return flattenToAppURL(item['@id']);
+    }
+    return null;
+  };
 
   const handleClick = (e, item) => {
     let itemUrl = '/' + item['@id'].split('/').slice(3).join('/');
@@ -66,7 +76,8 @@ const Accordion = (props) => {
       <div className="context-navigation-header">{data?.title}</div>
       {items.map((item, index) => {
         const { id } = item;
-        const childItems = childrenMap[item.url];
+        const itemUrl = getItemUrl(item);
+        const childItems = childrenMap[itemUrl];
         const { types = [] } = data;
         const filteredChildren = childItems?.filter((child) =>
           types.length ? types.includes(child['@type']) : child,
@@ -121,7 +132,7 @@ const Accordion = (props) => {
                   main={{
                     title: item.title,
                     href: item['@id'],
-                    url: item.url,
+                    url: itemUrl,
                   }}
                   data={data}
                 />
