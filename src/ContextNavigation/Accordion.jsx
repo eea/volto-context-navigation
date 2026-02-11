@@ -1,14 +1,28 @@
 import React from 'react';
 import { Accordion as SemanticAccordion, Icon } from 'semantic-ui-react';
+import { shallowEqual } from 'react-redux';
 
 import AccordionContent from './AccordionContent';
 import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { getContent } from '@plone/volto/actions';
+import { flattenToAppURL } from '@plone/volto/helpers';
 
 const useChildrenForItems = (items) => {
   const dispatch = useDispatch();
-  const itemUrls = React.useMemo(() => items.map((item) => item.url), [items]);
+  const itemUrls = React.useMemo(() => {
+    return items
+      .map((item) => {
+        if (item.url) {
+          return item.url;
+        }
+        if (item['@id']) {
+          return flattenToAppURL(item['@id']);
+        }
+        return null;
+      })
+      .filter(Boolean);
+  }, [items]);
 
   React.useEffect(() => {
     itemUrls.forEach((url) => {
@@ -17,23 +31,20 @@ const useChildrenForItems = (items) => {
     });
   }, [itemUrls, dispatch]);
 
-  const allSubrequests = useSelector(
-    (state) => state.content.subrequests || {},
-  );
-
-  const childrenMap = React.useMemo(() => {
+  const childrenMap = useSelector((state) => {
+    const subrequests = state.content.subrequests || {};
     const map = {};
     itemUrls.forEach((url) => {
-      map[url] = allSubrequests[url]?.data?.items || [];
+      map[url] = subrequests[url]?.data?.items || [];
     });
     return map;
-  }, [itemUrls, allSubrequests]);
+  }, shallowEqual);
 
   return childrenMap;
 };
 
 const Accordion = (props) => {
-  const { items = [], curent_location, activeMenu, data = {} } = props;
+  const { items = {}, curent_location, activeMenu, data = {} } = props;
   const [currentIndex, setIndex] = React.useState(activeMenu ?? 0);
   const history = useHistory();
   const childrenMap = useChildrenForItems(items);
@@ -57,10 +68,10 @@ const Accordion = (props) => {
         const { id } = item;
         const childItems = childrenMap[item.url];
         const { types = [] } = data;
-        const filteredChildren = childItems.filter((child) =>
+        const filteredChildren = childItems?.filter((child) =>
           types.length ? types.includes(child['@type']) : child,
         );
-        const hasChildren = filteredChildren.length > 0;
+        const hasChildren = filteredChildren?.length > 0;
         const active = currentIndex === index && hasChildren;
 
         return (
