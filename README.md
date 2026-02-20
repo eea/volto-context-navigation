@@ -3,16 +3,16 @@
 [![Releases](https://img.shields.io/github/v/release/eea/volto-context-navigation)](https://github.com/eea/volto-context-navigation/releases)
 
 [![Pipeline](https://ci.eionet.europa.eu/buildStatus/icon?job=volto-addons%2Fvolto-context-navigation%2Fmaster&subject=master)](https://ci.eionet.europa.eu/view/Github/job/volto-addons/job/volto-context-navigation/job/master/display/redirect)
-[![Lines of Code](https://sonarqube.eea.europa.eu/api/project_badges/measure?project=volto-context-navigation-master&metric=ncloc)](https://sonarqube.eea.europa.eu/dashboard?id=volto-context-navigation-master)
-[![Coverage](https://sonarqube.eea.europa.eu/api/project_badges/measure?project=volto-context-navigation-master&metric=coverage)](https://sonarqube.eea.europa.eu/dashboard?id=volto-context-navigation-master)
-[![Bugs](https://sonarqube.eea.europa.eu/api/project_badges/measure?project=volto-context-navigation-master&metric=bugs)](https://sonarqube.eea.europa.eu/dashboard?id=volto-context-navigation-master)
-[![Duplicated Lines (%)](https://sonarqube.eea.europa.eu/api/project_badges/measure?project=volto-context-navigation-master&metric=duplicated_lines_density)](https://sonarqube.eea.europa.eu/dashboard?id=volto-context-navigation-master)
+[![Lines of Code](https://sonarqube.eea.europa.eu/api/project_badges/measure?project=volto-context-navigation&metric=ncloc)](https://sonarqube.eea.europa.eu/dashboard?id=volto-context-navigation)
+[![Coverage](https://sonarqube.eea.europa.eu/api/project_badges/measure?project=volto-context-navigation&metric=coverage)](https://sonarqube.eea.europa.eu/dashboard?id=volto-context-navigation)
+[![Bugs](https://sonarqube.eea.europa.eu/api/project_badges/measure?project=volto-context-navigation&metric=bugs)](https://sonarqube.eea.europa.eu/dashboard?id=volto-context-navigation)
+[![Duplicated Lines (%)](https://sonarqube.eea.europa.eu/api/project_badges/measure?project=volto-context-navigation&metric=duplicated_lines_density)](https://sonarqube.eea.europa.eu/dashboard?id=volto-context-navigation)
 
 [![Pipeline](https://ci.eionet.europa.eu/buildStatus/icon?job=volto-addons%2Fvolto-context-navigation%2Fdevelop&subject=develop)](https://ci.eionet.europa.eu/view/Github/job/volto-addons/job/volto-context-navigation/job/develop/display/redirect)
-[![Lines of Code](https://sonarqube.eea.europa.eu/api/project_badges/measure?project=volto-context-navigation-develop&metric=ncloc)](https://sonarqube.eea.europa.eu/dashboard?id=volto-context-navigation-develop)
-[![Coverage](https://sonarqube.eea.europa.eu/api/project_badges/measure?project=volto-context-navigation-develop&metric=coverage)](https://sonarqube.eea.europa.eu/dashboard?id=volto-context-navigation-develop)
-[![Bugs](https://sonarqube.eea.europa.eu/api/project_badges/measure?project=volto-context-navigation-develop&metric=bugs)](https://sonarqube.eea.europa.eu/dashboard?id=volto-context-navigation-develop)
-[![Duplicated Lines (%)](https://sonarqube.eea.europa.eu/api/project_badges/measure?project=volto-context-navigation-develop&metric=duplicated_lines_density)](https://sonarqube.eea.europa.eu/dashboard?id=volto-context-navigation-develop)
+[![Lines of Code](https://sonarqube.eea.europa.eu/api/project_badges/measure?project=volto-context-navigation&branch=develop&metric=ncloc)](https://sonarqube.eea.europa.eu/dashboard?id=volto-context-navigation&branch=develop)
+[![Coverage](https://sonarqube.eea.europa.eu/api/project_badges/measure?project=volto-context-navigation&branch=develop&metric=coverage)](https://sonarqube.eea.europa.eu/dashboard?id=volto-context-navigation&branch=develop)
+[![Bugs](https://sonarqube.eea.europa.eu/api/project_badges/measure?project=volto-context-navigation&branch=develop&metric=bugs)](https://sonarqube.eea.europa.eu/dashboard?id=volto-context-navigation&branch=develop)
+[![Duplicated Lines (%)](https://sonarqube.eea.europa.eu/api/project_badges/measure?project=volto-context-navigation&branch=develop&metric=duplicated_lines_density)](https://sonarqube.eea.europa.eu/dashboard?id=volto-context-navigation&branch=develop)
 
 
 [Volto](https://github.com/plone/volto) add-on
