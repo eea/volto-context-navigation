@@ -45,9 +45,13 @@ const useChildrenForItems = (items) => {
 
 const Accordion = (props) => {
   const { items = [], curent_location, activeMenu, data = {} } = props;
-  const [currentIndex, setIndex] = React.useState(activeMenu ?? 0);
+  const [currentIndex, setIndex] = React.useState(activeMenu ?? -1);
   const history = useHistory();
   const childrenMap = useChildrenForItems(items);
+
+  React.useEffect(() => {
+    setIndex(activeMenu ?? -1);
+  }, [activeMenu]);
 
   const getItemUrl = (item) => {
     if (item.url) {
@@ -60,8 +64,10 @@ const Accordion = (props) => {
   };
 
   const handleClick = (e, item) => {
-    let itemUrl = '/' + item['@id'].split('/').slice(3).join('/');
-    history.push(itemUrl);
+    const itemUrl = getItemUrl(item);
+    if (itemUrl) {
+      history.push(itemUrl);
+    }
   };
 
   const handleIconClick = (e, index, hasChildren) => {
@@ -84,14 +90,19 @@ const Accordion = (props) => {
         );
         const hasChildren = filteredChildren?.length > 0;
         const active = currentIndex === index && hasChildren;
+        const isActiveTitle = activeMenu === index;
 
         return (
-          <SemanticAccordion id={id} key={index} className="secondary">
+          <SemanticAccordion
+            id={id}
+            key={itemUrl || id || index}
+            className="secondary"
+          >
             <SemanticAccordion.Title
               role="button"
               tabIndex={0}
-              active={activeMenu === index && hasChildren}
-              aria-expanded={activeMenu === index && hasChildren}
+              active={isActiveTitle}
+              aria-expanded={hasChildren ? active : false}
               index={index}
               onClick={(e) => {
                 handleClick(e, item);
@@ -128,7 +139,6 @@ const Accordion = (props) => {
               <SemanticAccordion.Content active={active}>
                 <AccordionContent
                   curent_location={curent_location}
-                  key={index}
                   main={{
                     title: item.title,
                     href: item['@id'],
