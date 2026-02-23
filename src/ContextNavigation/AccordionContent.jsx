@@ -25,26 +25,43 @@ const AccordionContent = (props) => {
   const filteredItems = items.filter((item) =>
     types.length ? types.includes(item['@type']) : item,
   );
+  const normalizePath = (path = '') => {
+    const normalized = getBaseUrl(path) || '/';
+    const squashed = normalized.replace(/\/{2,}/g, '/');
+    const withLeadingSlash = `/${squashed.replace(/^\/+/, '')}`;
+    return withLeadingSlash === '/'
+      ? '/'
+      : withLeadingSlash.replace(/\/+$/, '');
+  };
+  const currentPath = normalizePath(curent_location?.pathname);
 
   return filteredItems.length ? (
     <div className="dataset-content">
       <div>
-        {filteredItems.map((item) => (
-          <List.Item
-            key={item.id}
-            className={`${
-              item['@id']?.endsWith(curent_location.pathname) ? 'active' : ''
-            }`}
-          >
-            <List.Content>
-              <div className="dataset-item">
-                <Link to={flattenToAppURL(getBaseUrl(item['@id']))}>
-                  {item.title}
-                </Link>
-              </div>
-            </List.Content>
-          </List.Item>
-        ))}
+        {filteredItems.map((item) => {
+          const itemHref = flattenToAppURL(
+            getBaseUrl(item?.['@id'] || item?.url || ''),
+          );
+          const itemPath = normalizePath(itemHref);
+          const isActive =
+            itemPath === '/'
+              ? currentPath === '/'
+              : currentPath === itemPath ||
+                currentPath.startsWith(`${itemPath}/`);
+
+          return (
+            <List.Item
+              key={item.id || item?.['@id'] || itemHref}
+              className={isActive ? 'active' : ''}
+            >
+              <List.Content>
+                <div className="dataset-item">
+                  <Link to={itemHref}>{item.title}</Link>
+                </div>
+              </List.Content>
+            </List.Item>
+          );
+        })}
       </div>
     </div>
   ) : null;
