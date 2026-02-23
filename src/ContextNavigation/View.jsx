@@ -19,7 +19,6 @@ export function useChildren(location) {
 
 export default function View(props) {
   const { data } = props;
-  const shouldDebug = process.env.NODE_ENV !== 'production';
   let root_path = data?.root_path;
   if (typeof root_path === 'undefined') {
     root_path = '/';
@@ -29,14 +28,6 @@ export default function View(props) {
     items = [];
   }
   if (!items.length) {
-    if (shouldDebug) {
-      // eslint-disable-next-line no-console
-      console.log('[context-navigation] empty block', {
-        title: data?.title,
-        root_path,
-        itemsCount: items.length,
-      });
-    }
     return null;
   }
 

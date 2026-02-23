@@ -11,7 +11,6 @@ const AccordionContent = (props) => {
     curent_location,
     data: { types = [] },
   } = props;
-  const shouldDebug = process.env.NODE_ENV !== 'production';
   const location = main.url;
 
   // React.useEffect(() => {
@@ -49,17 +48,6 @@ const AccordionContent = (props) => {
               ? currentPath === '/'
               : currentPath === itemPath ||
                 currentPath.startsWith(`${itemPath}/`);
-
-          if (shouldDebug) {
-            // eslint-disable-next-line no-console
-            console.log('[context-navigation] child compare', {
-              title: item?.title,
-              currentPath,
-              itemHref,
-              itemPath,
-              isActive,
-            });
-          }
 
           return (
             <List.Item

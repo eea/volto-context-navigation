@@ -13,7 +13,6 @@ import { useLocation } from 'react-router-dom';
 export function ContextNavigationComponent(props) {
   const { items = [], data } = props;
   let activeMenu = null;
-  const shouldDebug = process.env.NODE_ENV !== 'production';
 
   const normalizePath = (path = '') => {
     const normalized = getBaseUrl(path) || '/';
@@ -27,16 +26,6 @@ export function ContextNavigationComponent(props) {
   const curent_location = useLocation();
   const currentPath = normalizePath(curent_location?.pathname);
 
-  if (shouldDebug) {
-    // eslint-disable-next-line no-console
-    console.log('[context-navigation] menu current path', {
-      rawPath: curent_location?.pathname,
-      normalizedPath: currentPath,
-      itemsCount: items.length,
-      title: data?.title,
-    });
-  }
-
   for (let i = 0; i < items.length; i++) {
     const rawItemPath = items[i]?.url || items[i]?.['@id'] || '';
     const itemUrl = normalizePath(flattenToAppURL(rawItemPath));
@@ -46,18 +35,6 @@ export function ContextNavigationComponent(props) {
       itemUrl === '/'
         ? currentPath === '/'
         : currentPath === itemUrl || currentPath.startsWith(`${itemUrl}/`);
-
-    if (shouldDebug) {
-      // eslint-disable-next-line no-console
-      console.log('[context-navigation] menu compare', {
-        index: i,
-        title: items[i]?.title,
-        rawItemPath,
-        normalizedItemPath: itemUrl,
-        currentPath,
-        isActive,
-      });
-    }
 
     if (isActive) {
       activeMenu = i;
