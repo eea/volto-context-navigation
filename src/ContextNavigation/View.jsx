@@ -27,6 +27,9 @@ export default function View(props) {
   if (root_path === '/') {
     items = [];
   }
+  if (!items.length) {
+    return null;
+  }
 
   return (
     <div className="block context-navigation-block">
