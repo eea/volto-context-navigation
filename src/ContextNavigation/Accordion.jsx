@@ -5,8 +5,8 @@ import { shallowEqual } from 'react-redux';
 import AccordionContent from './AccordionContent';
 import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { getContent } from '@plone/volto/actions';
-import { flattenToAppURL } from '@plone/volto/helpers';
+import { getContent } from '@plone/volto/actions/content/content';
+import { flattenToAppURL } from '@plone/volto/helpers/Url/Url';
 
 const useChildrenForItems = (items) => {
   const dispatch = useDispatch();
