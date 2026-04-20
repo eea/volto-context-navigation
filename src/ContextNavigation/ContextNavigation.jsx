@@ -1,6 +1,6 @@
 import React from 'react';
 import { compose } from 'redux';
-import { flattenToAppURL, getBaseUrl } from '@plone/volto/helpers';
+import { flattenToAppURL, getBaseUrl } from '@plone/volto/helpers/Url/Url';
 
 import Accordion from './Accordion';
 import { useLocation } from 'react-router-dom';

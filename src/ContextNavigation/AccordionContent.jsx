@@ -2,7 +2,7 @@ import React from 'react';
 import { List } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 import { compose } from 'redux';
-import { flattenToAppURL, getBaseUrl } from '@plone/volto/helpers';
+import { flattenToAppURL, getBaseUrl } from '@plone/volto/helpers/Url/Url';
 import { useChildren } from './View';
 
 const AccordionContent = (props) => {
