@@ -1,6 +1,6 @@
 import React from 'react';
 import { MemoryRouter } from 'react-router-dom';
-import { render, fireEvent } from '@testing-library/react';
+import { render, fireEvent, within } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { Provider } from 'react-intl-redux';
 import configureStore from 'redux-mock-store';
@@ -43,28 +43,36 @@ describe('Select variation', () => {
   });
 
   it('opens the dropdown with the siblings and navigates on selection', () => {
-    const { getByRole, getByText } = renderWithProviders(
+    const { getByRole } = renderWithProviders(
       <Select items={items} data={{}} />,
     );
 
     fireEvent.click(getByRole('button'));
     expect(getByRole('button')).toHaveAttribute('aria-expanded', 'true');
-    expect(getByRole('menu')).toBeInTheDocument();
-    expect(getByText('D1 · Mammals')).toHaveAttribute('href', '/en/mammals');
-    expect(getByText('D2 · Birds')).toHaveAttribute('aria-current', 'page');
 
-    fireEvent.click(getByText('D1 · Mammals'));
+    const menu = within(getByRole('menu'));
+    expect(menu.getByText('D1 · Mammals')).toHaveAttribute(
+      'href',
+      '/en/mammals',
+    );
+    expect(menu.getByText('D2 · Birds')).toHaveAttribute(
+      'aria-current',
+      'page',
+    );
+
+    fireEvent.click(menu.getByText('D1 · Mammals'));
     expect(getByRole('button')).toHaveAttribute('aria-expanded', 'false');
   });
 
   it('only lists the configured content types', () => {
-    const { getByRole, queryByText } = renderWithProviders(
+    const { getByRole } = renderWithProviders(
       <Select items={items} data={{ types: ['Folder'] }} />,
     );
 
     fireEvent.click(getByRole('button'));
-    expect(queryByText('D1 · Mammals')).toBeInTheDocument();
-    expect(queryByText('D3 · Fish')).not.toBeInTheDocument();
+    const menu = within(getByRole('menu'));
+    expect(menu.getByText('D1 · Mammals')).toBeInTheDocument();
+    expect(menu.queryByText('D3 · Fish')).not.toBeInTheDocument();
   });
 
   it('closes on Escape', () => {

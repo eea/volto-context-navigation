@@ -8,10 +8,10 @@
     fill: #183 !important;
   }
 
-  .ui.accordion[class*='ary']>.active.title,
-  .ui.accordion[class*='ary'].inverted>.title,
-  .ui.accordion[class*='ary'].inverted>.icon,
-  .ui.accordion[class*='ary']>.filter {
+  .ui.accordion[class*='ary'] > .active.title,
+  .ui.accordion[class*='ary'].inverted > .title,
+  .ui.accordion[class*='ary'].inverted > .icon,
+  .ui.accordion[class*='ary'] > .filter {
     --text-color-secondary: #ffffff;
     --text-color-hover: #0079cf;
     --text-color: #0079cf;
@@ -19,10 +19,10 @@
     font-weight: bold;
   }
 
-  .ui.accordion[class*='ary']>.title,
-  .ui.accordion[class*='ary'].inverted>.title,
-  .ui.accordion[class*='ary'].inverted>.icon,
-  .ui.accordion[class*='ary']>.filter {
+  .ui.accordion[class*='ary'] > .title,
+  .ui.accordion[class*='ary'].inverted > .title,
+  .ui.accordion[class*='ary'].inverted > .icon,
+  .ui.accordion[class*='ary'] > .filter {
     color: var(--text-color);
     font-weight: bold;
 
@@ -35,7 +35,7 @@
     --bg-color: #ffffff;
     border-bottom: 0.0625rem solid #e6e7e8;
 
-    .item>.content {
+    .item > .content {
       &:hover {
         background: #f9f9f9;
 
@@ -69,20 +69,20 @@
 
     .context-navigation-select-trigger {
       display: flex;
+      width: 100%;
       align-items: center;
       justify-content: space-between;
-      width: 100%;
       padding: 0.875rem 1rem;
       border: 1px solid #bcbec0;
       border-radius: 0;
       background: #fff;
       color: #004b7f;
+      cursor: pointer;
       font-family: inherit;
       font-size: 1.125rem;
       font-weight: bold;
       line-height: 1.25;
       text-align: left;
-      cursor: pointer;
 
       .icon {
         flex: 0 0 auto;
@@ -112,13 +112,13 @@
       left: 0;
       width: 100%;
       max-height: 20rem;
-      margin: 0;
       padding: 0;
-      overflow-y: auto;
-      list-style: none;
-      background: #fff;
       border: 1px solid #bcbec0;
+      margin: 0;
+      background: #fff;
       box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.08);
+      list-style: none;
+      overflow-y: auto;
 
       a {
         display: block;
