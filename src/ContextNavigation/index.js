@@ -1,6 +1,7 @@
 import zoomSVG from '@plone/volto/icons/zoom.svg';
 import Edit from './Edit';
 import View from './View';
+import variations from './variations';
 
 export default function installBlock(config) {
   const blocksConfig = config.blocks.blocksConfig;
@@ -17,7 +18,7 @@ export default function installBlock(config) {
       addPermission: [],
       view: [],
     },
-    variations: [],
+    variations,
     restricted: false,
   };
 

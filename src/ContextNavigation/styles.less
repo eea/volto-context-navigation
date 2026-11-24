@@ -62,4 +62,81 @@
   .item.active a {
     font-weight: bold;
   }
+
+  // Select variation
+  .context-navigation-select {
+    position: relative;
+
+    .context-navigation-select-trigger {
+      display: flex;
+      width: 100%;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.875rem 1rem;
+      border: 1px solid #bcbec0;
+      border-radius: 0;
+      background: #fff;
+      color: #004b7f;
+      cursor: pointer;
+      font-family: inherit;
+      font-size: 1.125rem;
+      font-weight: bold;
+      line-height: 1.25;
+      text-align: left;
+
+      .icon {
+        flex: 0 0 auto;
+        margin: 0 0 0 0.75rem;
+        color: #004b7f;
+      }
+
+      &:hover,
+      &:focus {
+        color: #0079cf;
+
+        .icon {
+          color: #0079cf;
+        }
+      }
+
+      &:focus-visible {
+        outline: 2px solid #0079cf;
+        outline-offset: 2px;
+      }
+    }
+
+    .context-navigation-select-menu {
+      position: absolute;
+      z-index: 10;
+      top: calc(100% + 0.125rem);
+      left: 0;
+      width: 100%;
+      max-height: 20rem;
+      padding: 0;
+      border: 1px solid #bcbec0;
+      margin: 0;
+      background: #fff;
+      box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.08);
+      list-style: none;
+      overflow-y: auto;
+
+      a {
+        display: block;
+        padding: 0.75rem 1.25rem;
+        color: #3d5265;
+        text-decoration: none;
+
+        &:hover,
+        &:focus {
+          background: #f9f9f9;
+          color: #0079cf;
+        }
+
+        &.active {
+          color: #004b7f;
+          font-weight: bold;
+        }
+      }
+    }
+  }
 }
