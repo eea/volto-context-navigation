@@ -3,6 +3,7 @@ import { List } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 import { compose } from 'redux';
 import { flattenToAppURL, getBaseUrl } from '@plone/volto/helpers/Url/Url';
+import { normalizePath } from './helpers';
 import { useChildren } from './View';
 
 const AccordionContent = (props) => {
@@ -25,14 +26,6 @@ const AccordionContent = (props) => {
   const filteredItems = items.filter((item) =>
     types.length ? types.includes(item['@type']) : item,
   );
-  const normalizePath = (path = '') => {
-    const normalized = getBaseUrl(path) || '/';
-    const squashed = normalized.replace(/\/{2,}/g, '/');
-    const withLeadingSlash = `/${squashed.replace(/^\/+/, '')}`;
-    return withLeadingSlash === '/'
-      ? '/'
-      : withLeadingSlash.replace(/\/+$/, '');
-  };
   const currentPath = normalizePath(curent_location?.pathname);
 
   return filteredItems.length ? (

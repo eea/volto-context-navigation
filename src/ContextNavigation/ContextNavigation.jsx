@@ -1,9 +1,8 @@
 import React from 'react';
 import { compose } from 'redux';
-import { flattenToAppURL, getBaseUrl } from '@plone/volto/helpers/Url/Url';
-
 import Accordion from './Accordion';
 import EmptyState from './EmptyState';
+import { getItemUrl, normalizePath } from './helpers';
 import { useLocation } from 'react-router-dom';
 
 /**
@@ -15,21 +14,11 @@ export function ContextNavigationComponent(props) {
   const { items = [], data } = props;
   let activeMenu = null;
 
-  const normalizePath = (path = '') => {
-    const normalized = getBaseUrl(path) || '/';
-    const squashed = normalized.replace(/\/{2,}/g, '/');
-    const withLeadingSlash = `/${squashed.replace(/^\/+/, '')}`;
-    return withLeadingSlash === '/'
-      ? '/'
-      : withLeadingSlash.replace(/\/+$/, '');
-  };
-
   const curent_location = useLocation();
   const currentPath = normalizePath(curent_location?.pathname);
 
   for (let i = 0; i < items.length; i++) {
-    const rawItemPath = items[i]?.url || items[i]?.['@id'] || '';
-    const itemUrl = normalizePath(flattenToAppURL(rawItemPath));
+    const itemUrl = normalizePath(getItemUrl(items[i]));
     items[i].is_active = false;
 
     const isActive =

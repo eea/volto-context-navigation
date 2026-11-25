@@ -7,6 +7,7 @@ import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { getContent } from '@plone/volto/actions/content/content';
 import { flattenToAppURL } from '@plone/volto/helpers/Url/Url';
+import { getDepth, getItemUrl } from './helpers';
 
 const useChildrenForItems = (items) => {
   const dispatch = useDispatch();
@@ -47,21 +48,14 @@ const Accordion = (props) => {
   const { items = [], curent_location, activeMenu, data = {} } = props;
   const [currentIndex, setIndex] = React.useState(activeMenu ?? -1);
   const history = useHistory();
-  const childrenMap = useChildrenForItems(items);
+  // With a depth greater than 0 all levels are already part of `items` and are
+  // rendered as a flat list, so no extra children are fetched per item.
+  const isFlat = getDepth(data) > 0;
+  const childrenMap = useChildrenForItems(isFlat ? [] : items);
 
   React.useEffect(() => {
     setIndex(activeMenu ?? -1);
   }, [activeMenu]);
-
-  const getItemUrl = (item) => {
-    if (item.url) {
-      return item.url;
-    }
-    if (item['@id']) {
-      return flattenToAppURL(item['@id']);
-    }
-    return null;
-  };
 
   const handleClick = (e, item) => {
     const itemUrl = getItemUrl(item);

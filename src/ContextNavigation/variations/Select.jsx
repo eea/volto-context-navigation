@@ -3,7 +3,7 @@ import { defineMessages, useIntl } from 'react-intl';
 import { Link, useLocation } from 'react-router-dom';
 import { Icon } from 'semantic-ui-react';
 import cx from 'classnames';
-import { flattenToAppURL, getBaseUrl } from '@plone/volto/helpers/Url/Url';
+import { getItemUrl, normalizePath } from '../helpers';
 
 import EmptyState from '../EmptyState';
 
@@ -13,18 +13,6 @@ const messages = defineMessages({
     defaultMessage: 'Navigation',
   },
 });
-
-const normalizePath = (path = '') => {
-  const normalized = getBaseUrl(path) || '/';
-  const squashed = normalized.replace(/\/{2,}/g, '/');
-  const withLeadingSlash = `/${squashed.replace(/^\/+/, '')}`;
-  return withLeadingSlash === '/' ? '/' : withLeadingSlash.replace(/\/+$/, '');
-};
-
-const getItemUrl = (item) => {
-  const url = item?.url || item?.['@id'] || '';
-  return flattenToAppURL(url);
-};
 
 /**
  * Select variation: the trigger shows the current (active) page and the
@@ -48,14 +36,19 @@ const Select = (props) => {
 
   const currentPath = normalizePath(location?.pathname);
 
+  // With a depth higher than 0 the list also contains grandchildren, so pick
+  // the deepest matching ancestor (the current page) and not the first one.
   const activeItem = React.useMemo(
     () =>
-      filteredItems.find((item) => {
+      filteredItems.reduce((deepest, item) => {
         const itemPath = normalizePath(getItemUrl(item));
-        return (
-          itemPath === currentPath || currentPath.startsWith(`${itemPath}/`)
-        );
-      }),
+        const isMatch =
+          itemPath === currentPath || currentPath.startsWith(`${itemPath}/`);
+        if (!isMatch) return deepest;
+        return !deepest || itemPath.length > deepest.path.length
+          ? { item, path: itemPath }
+          : deepest;
+      }, null)?.item,
     [filteredItems, currentPath],
   );
 

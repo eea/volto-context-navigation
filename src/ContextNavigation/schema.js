@@ -1,4 +1,4 @@
-const fields = ['root_path', 'title', 'types'];
+const fields = ['root_path', 'depth', 'title', 'types'];
 
 const schema = ({ contentTypes }) => {
   const availableTypes = contentTypes.map((type) => [
@@ -24,6 +24,13 @@ const schema = ({ contentTypes }) => {
           'Ex: /en/knowledge-and-data/regional-adaptation-support-tool',
         required: true,
         noValueOption: false,
+      },
+      depth: {
+        title: 'Depth',
+        type: 'integer',
+        description:
+          'How many extra levels below the root path to display. 0 (default) shows only the direct children of the root path, 1 also shows their children, and so on.',
+        minimum: 0,
       },
       title: {
         title: 'Title',
