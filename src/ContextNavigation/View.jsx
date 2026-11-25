@@ -41,10 +41,6 @@ export default function View(props) {
     variations[0];
   const Variation = variation?.view || ContextNavigation;
 
-  if (!items.length) {
-    return null;
-  }
-
   return (
     <div
       className={cx(

@@ -42,7 +42,13 @@ const renderView = (data) =>
 
 describe('ContextNavigation View', () => {
   beforeAll(() => {
-    const blocksConfig = config.blocks.blocksConfig;
+    // Make the test suite self-contained: the registry is normally populated
+    // by the Volto test setup, which is not always available.
+    config.set('settings', {
+      ...config.settings,
+      nonContentRoutes: config.settings?.nonContentRoutes || [],
+    });
+    const blocksConfig = config.blocks?.blocksConfig || {};
     config.set('blocks', {
       ...config.blocks,
       blocksConfig: {
@@ -63,5 +69,29 @@ describe('ContextNavigation View', () => {
 
     expect(container.querySelector('.variation-select')).toBeInTheDocument();
     expect(getByRole('button')).toHaveTextContent('D1 · Mammals');
+  });
+
+  it('keeps the block visible with a placeholder when there are no items', () => {
+    const { container, getByText } = render(
+      <Provider store={store}>
+        <MemoryRouter initialEntries={['/mammals']}>
+          <View data={{ '@type': 'contextNavigation', root_path: '/empty' }} />
+        </MemoryRouter>
+      </Provider>,
+    );
+
+    expect(
+      container.querySelector('.block.context-navigation-block'),
+    ).toBeInTheDocument();
+    expect(getByText('No items available')).toBeInTheDocument();
+  });
+
+  it('renders the placeholder for the Select variation when the types filter empties it', () => {
+    const { getByText } = renderView({
+      variation: 'select',
+      types: ['Document'],
+    });
+
+    expect(getByText('No items available')).toBeInTheDocument();
   });
 });

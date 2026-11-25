@@ -3,6 +3,7 @@ import { compose } from 'redux';
 import { flattenToAppURL, getBaseUrl } from '@plone/volto/helpers/Url/Url';
 
 import Accordion from './Accordion';
+import EmptyState from './EmptyState';
 import { useLocation } from 'react-router-dom';
 
 /**
@@ -42,16 +43,18 @@ export function ContextNavigationComponent(props) {
     }
   }
 
+  if (!items.length) {
+    return <EmptyState title={data?.title} />;
+  }
+
   return (
     <>
-      {items.length ? (
-        <Accordion
-          items={items}
-          curent_location={curent_location}
-          activeMenu={activeMenu}
-          data={data}
-        />
-      ) : null}
+      <Accordion
+        items={items}
+        curent_location={curent_location}
+        activeMenu={activeMenu}
+        data={data}
+      />
     </>
   );
 }

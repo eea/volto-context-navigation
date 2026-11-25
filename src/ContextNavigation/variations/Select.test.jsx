@@ -4,7 +4,15 @@ import { render, fireEvent, within } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { Provider } from 'react-intl-redux';
 import configureStore from 'redux-mock-store';
+import config from '@plone/volto/registry';
 import Select from './Select';
+
+// The Volto registry is normally populated by the project test setup; make the
+// suite self-contained so `getBaseUrl` has the settings it needs.
+config.set('settings', {
+  ...config.settings,
+  nonContentRoutes: config.settings?.nonContentRoutes || [],
+});
 
 const mockStore = configureStore();
 const store = mockStore({
@@ -73,6 +81,15 @@ describe('Select variation', () => {
     const menu = within(getByRole('menu'));
     expect(menu.getByText('D1 · Mammals')).toBeInTheDocument();
     expect(menu.queryByText('D3 · Fish')).not.toBeInTheDocument();
+  });
+
+  it('shows a placeholder when the types filter removes every item', () => {
+    const { getByText, queryByRole } = renderWithProviders(
+      <Select items={items} data={{ types: ['Image'] }} />,
+    );
+
+    expect(queryByRole('button')).not.toBeInTheDocument();
+    expect(getByText('No items available')).toBeInTheDocument();
   });
 
   it('closes on Escape', () => {

@@ -5,6 +5,8 @@ import { Icon } from 'semantic-ui-react';
 import cx from 'classnames';
 import { flattenToAppURL, getBaseUrl } from '@plone/volto/helpers/Url/Url';
 
+import EmptyState from '../EmptyState';
+
 const messages = defineMessages({
   navigation: {
     id: 'Navigation',
@@ -83,7 +85,7 @@ const Select = (props) => {
     };
   }, [isOpen]);
 
-  if (!filteredItems.length) return null;
+  if (!filteredItems.length) return <EmptyState />;
 
   const triggerLabel =
     activeItem?.title || data.title || intl.formatMessage(messages.navigation);

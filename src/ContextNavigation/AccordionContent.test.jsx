@@ -4,7 +4,15 @@ import configureStore from 'redux-mock-store';
 import { render } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { Provider } from 'react-intl-redux';
+import config from '@plone/volto/registry';
 import AccordionContent from './AccordionContent';
+
+// The Volto registry is normally populated by the project test setup; make the
+// suite self-contained so `getBaseUrl` has the settings it needs.
+config.set('settings', {
+  ...config.settings,
+  nonContentRoutes: config.settings?.nonContentRoutes || [],
+});
 
 const mockStore = configureStore();
 
